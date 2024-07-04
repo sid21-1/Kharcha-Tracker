@@ -1,11 +1,12 @@
 import { auth, provider } from "../../config/firebase-config";
 import { signInWithPopup } from "firebase/auth";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
+import { useGetUserInfo } from "../../hooks/useGetUserInfo";
 
 const Auth = () => {
   const navigate = useNavigate();
-
+  // const { isAuth } = useGetUserInfo();
   const signInWithGoogle = async () => {
     const results = await signInWithPopup(auth, provider);
     console.log(results);
@@ -18,6 +19,10 @@ const Auth = () => {
     localStorage.setItem("auth", JSON.stringify(authInfo));
     navigate("/kharcha-tracker");
   };
+
+  // if (isAuth) {
+  //   return <Navigate to="/kharcha-tracker" />;
+  // }
 
   return (
     <>
