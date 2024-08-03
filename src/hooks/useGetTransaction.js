@@ -5,6 +5,8 @@ import {
   where,
   orderBy,
   onSnapshot,
+  doc,
+  deleteDoc,
 } from "firebase/firestore";
 import { db } from "../config/firebase-config";
 import { useGetUserInfo } from "./useGetUserInfo";
@@ -60,7 +62,17 @@ const useGetTransaction = () => {
   useEffect(() => {
     getTransactions();
   }, []);
-  return { transactions, transactionTotals };
+  return { transactions, transactionTotals, handleDelete };
 };
 
 export default useGetTransaction;
+
+export const handleDelete = async (id) => {
+  try {
+    const transactionDocRef = doc(db, "transaction", id);
+    await deleteDoc(transactionDocRef);
+    // console.log("Transaction deleted successfully");
+  } catch (error) {
+    console.log("Error deleting transaction:", error);
+  }
+};

@@ -11,12 +11,16 @@ const useAddTransaction = () => {
     description,
     transactionAmount,
     transactionType,
+    transactionDate,
+    transactionSubCatagory,
   }) => {
     await addDoc(transactionCollectionRef, {
       userID,
       description,
       transactionAmount,
       transactionType,
+      transactionDate,
+      transactionSubCatagory,
       createdAt: serverTimestamp(),
     });
   };
