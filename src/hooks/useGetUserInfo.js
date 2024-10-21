@@ -2,9 +2,9 @@
 // also you can access any particular varible also from this hook
 export const useGetUserInfo = () => {
   // JSON.parse helps us to convert a strify data into an object
-  const { name, profilePhoto, userID, isAuth } = JSON.parse(
+  const { name, profilePhoto, userId, isAuth } = JSON.parse(
     localStorage.getItem("auth")
   );
 
-  return { name, profilePhoto, userID, isAuth };
+  return { name, profilePhoto, userId, isAuth };
 };

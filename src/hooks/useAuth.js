@@ -35,9 +35,10 @@ export const useAuth = () => {
         body: JSON.stringify(requestBody),
       });
       const responseData = await response.json();
+      console.log(responseData);
       if (response.status === 200 || response.status === 201) {
         const authInfo = {
-          userId: responseData.userId,
+          userId: responseData.user_id,
           name: responseData.userName,
           profilePhoto: "",
           isAuth: true,

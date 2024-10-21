@@ -18,15 +18,15 @@ const useGetTransaction = () => {
     income: 0.0,
     expense: 0.0,
   });
-  const { userID } = useGetUserInfo();
+  const { userId } = useGetUserInfo();
 
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        if (userID) {
-          console.log("UserID:", userID);
+        if (userId) {
+          console.log("UserID:", userId);
           const response = await fetch(
-            `http://localhost:5000/transactions?userid=${userID}`
+            `http://localhost:5000/transactions/${userId}`
           );
           const result = await response.json();
           if (response.ok) {
@@ -41,7 +41,7 @@ const useGetTransaction = () => {
       }
     };
     fetchTransactions();
-  }, [userID]);
+  }, [userId]);
   return { transactions, transactionTotals };
 };
 

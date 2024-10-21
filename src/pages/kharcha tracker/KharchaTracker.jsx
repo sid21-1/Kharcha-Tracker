@@ -10,18 +10,18 @@ import MyDatePicker from "../date picker/MyDatePicker";
 
 const KharchaTracker = () => {
   //These are the custom hooks that is being called so that we can use it
-  // const { addTransaction } = useAddTransaction();
-  const { transactions, transactionTotals } = useGetTransaction();
-  const { name, profilePhoto } = useGetUserInfo();
+  const { addTransaction } = useAddTransaction();
+  const { transactions } = useGetTransaction();
+  const { name, profilePhoto, userId } = useGetUserInfo();
   const navigate = useNavigate();
 
   // these are the states that are being used inside the form
   const [description, setDescription] = useState("");
-  const [transactionSubCatagory, setTransactioSubCatagory] = useState("");
+  // const [transactionSubCatagory, setTransactioSubCatagory] = useState("");
   const [transactionAmount, setTransactionAmount] = useState(0);
   const [transactionType, setTransactionType] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
-  const [transactionDate, setTransactionDate] = useState(new Date());
+  // const [transactionDate, setTransactionDate] = useState(new Date());
   // const { balance, income, expenses } = transactionTotals;
   // console.log(transactionDate);
 
@@ -36,7 +36,7 @@ const KharchaTracker = () => {
   };
 
   // State to track the remaining time
-  const [timeLeft, setTimeLeft] = useState(1 * 60); // 5 minutes in seconds
+  const [timeLeft, setTimeLeft] = useState(5 * 60); // 5 minutes in seconds
 
   // Start the timer when the component is rendered
   useEffect(() => {
@@ -89,11 +89,12 @@ const KharchaTracker = () => {
     }
 
     addTransaction({
+      userId,
       description,
       transactionAmount,
       transactionType,
-      transactionDate,
-      transactionSubCatagory,
+      // transactionDate,
+      // transactionSubCatagory,
     });
     setDescription("");
     setTransactionAmount(0);
@@ -103,16 +104,7 @@ const KharchaTracker = () => {
 
   return (
     <>
-      <div>
-        <h1>Hello</h1>
-        <ul>
-          {transactions.map((transaction, index) => (
-            <li key={index}>
-              <h1>{transaction}</h1>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <div>{userId}</div>
       <div className="bg-[#EEF3F9] ">
         <div className="kharcha-tracker flex w-full h-screen justify-center ">
           {/* landing page */}
@@ -167,7 +159,7 @@ const KharchaTracker = () => {
                 <p>₹{expenses}</p>
               </div>
             </div> */}
-            {/* <form className="add-transaction flex flex-col" onSubmit={onSubmit}>
+            <form className="add-transaction flex flex-col" onSubmit={onSubmit}>
               <div className="flex flex-col md:flex-row   ">
                 <input
                   className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full md:w-2/5 p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500 mr-10 mb-5"
@@ -225,23 +217,23 @@ const KharchaTracker = () => {
                   </div>
                 )}
               </div>
-              <div className="mb-5">
+              {/* <div className="mb-5">
                 <MyDatePicker
                   startDate={transactionDate}
                   setStartDate={setTransactionDate}
                   className="bg-black"
                 />
-              </div>
+              </div> */}
               <button
                 type="submit"
                 className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 w-32"
               >
                 Submit
               </button>
-            </form> */}
+            </form>
           </div>
         </div>
-        {/* <div className=" flex flex-col m-auto w-[90%] mt-5 border rounded shadow-2xl bg-[#ffffff]">
+        <div className=" flex flex-col m-auto w-[90%] mt-5 border rounded shadow-2xl bg-[#ffffff]">
           <h3 className="text-3xl font-bold mb-4 text-center">Transactions</h3>
           <ul className="flex justify-evenly items-center w-full border-t border-gray-300">
             <li className="w-1/5 text-center font-bold">Description</li>
@@ -253,40 +245,40 @@ const KharchaTracker = () => {
           <ul className="w-full">
             {transactions.map((transaction, index) => {
               const {
-                id,
+                transaction_id,
                 description,
-                transactionAmount,
-                transactionType,
-                transactionDate,
+                transaction_amount,
+                transaction_type,
+                transaction_date,
               } = transaction;
               return (
                 <li
-                  key={index}
+                  key={transaction_id}
                   className="flex justify-evenly px-5 py-2 border-t border-gray-300 w-full"
                 >
                   <span className="w-1/5 text-center">{description}</span>
                   <span className="w-1/5 text-center">
-                    ₹{transactionAmount}
+                    ₹{transaction_amount}
                   </span>
-                  <span className="w-1/5 text-center">{transactionType}</span>
+                  <span className="w-1/5 text-center">{transaction_type}</span>
                   <span className="w-1/5 text-center">
-                    {transactionDate
-                      ? transactionDate.toDate().toLocaleDateString()
+                    {transaction_date
+                      ? transaction_date.toDate().toLocaleDateString()
                       : "N/A"}
                   </span>
                   <span className="w-1/5 text-center">
-                    <button
+                    {/* <button
                       className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-2 py-2.5 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900  "
-                      onClick={() => handleDelete(transaction.id)}
+                      onClick={() => handleDelete(transaction.transaction_id)}
                     >
                       Delete
-                    </button>
+                    </button> */}
                   </span>
                 </li>
               );
             })}
           </ul>
-        </div> */}
+        </div>
       </div>
     </>
   );
